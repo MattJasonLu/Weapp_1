@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ljc.mapper.TurnoverMapper">
+    <select id="list" resultType="Turnover">
+        SELECT * FROM t_turnover
+    </select>
+    <select id="get" parameterType="String" resultType="Turnover">
+        SELECT * FROM t_turnover WHERE name LIKE "%"#{keyword}"%"
+        OR place LIKE "%"#{keyword}"%"
+    </select>
+    <insert id="add" parameterType="Turnover">
+        INSERT INTO t_turnover (cardId, consumption, time, name, place)
+        VALUES (#{cardId}, #{consumption}, #{time}, #{name}, #{place})
+    </insert>
+    <delete id="delete" parameterType="_int">
+        DELETE FROM t_turnover WHERE id = #{id}
+    </delete>
+    <update id="update" parameterType="Turnover">
+        UPDATE t_turnover SET name = #{name} WHERE id = #{id}
+    </update>
+</mapper>

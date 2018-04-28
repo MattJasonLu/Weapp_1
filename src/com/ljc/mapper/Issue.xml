@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ljc.mapper.IssueMapper">
+    <select id="list" resultType="Issue">
+        select * from t_issue
+    </select>
+
+    <select id="get" resultType="Issue" parameterType="String">
+        select * from t_issue where content like "%"#{content}"%"
+    </select>
+
+    <insert id="add" parameterType="Issue">
+        insert into t_issue (name, studentId, time, content) values (#{name}, #{studentId}, #{time}, #{content})
+    </insert>
+
+    <delete id="delete" parameterType="_int">
+        delete from t_issue where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="Issue">
+        update t_issue set content = #{content} where id = #{id}
+    </update>
+</mapper>

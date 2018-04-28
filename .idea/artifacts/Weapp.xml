@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="Weapp">
+    <output-path>$PROJECT_DIR$/out/artifacts/Weapp</output-path>
+    <root id="archive" name="Weapp.war">
+      <element id="javaee-facet-resources" facet="Weapp_1/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Weapp_1" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="SSM" />
+          <element id="library" level="project" name="json" />
+        </element>
+      </element>
+      <element id="dir-copy" path="$USER_HOME$/Desktop" />
+    </root>
+  </artifact>
+</component>
