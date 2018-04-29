@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -37,11 +38,25 @@ public class UserController {
     }
 
     @RequestMapping("getUser")
-    public void getUser(User user) {
-        User getUser = userService.get(user);
-        if (getUser != null) {
-            System.out.println(getUser);
+    public ModelAndView getUser(User user, HttpServletResponse response) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("success");
+        try {
+            User getUser = userService.get(user);
+
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json; charset=utf-8");
+
+            if (getUser != null) {
+                mav.addObject("message", getUser);
+                response.getWriter().append(getUser.toString());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mav.addObject("message", "fail");
         }
+        return mav;
     }
 
     @RequestMapping("updateUser")
