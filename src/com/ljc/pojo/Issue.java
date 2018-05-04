@@ -7,10 +7,10 @@ import java.util.Date;
  */
 public class Issue {
     private int id;
-    private String name;
     private int studentId;
     private Date time;
     private String content;
+    private String category;
 
     public int getId() {
         return id;
@@ -18,14 +18,6 @@ public class Issue {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getStudentId() {
@@ -52,14 +44,11 @@ public class Issue {
         this.content = content;
     }
 
-    @Override
-    public String toString() {
-        return "Issue{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", studentId=" + studentId +
-                ", time=" + time +
-                ", content='" + content + '\'' +
-                '}';
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

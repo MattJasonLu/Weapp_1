@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -22,92 +23,37 @@ public class IssueController {
     @Autowired
     IssueService issueService;
 
-    @RequestMapping("listIssue")
-    public ModelAndView listIssue(HttpServletResponse response) {
-
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-
+    @RequestMapping("listLost")
+    public ModelAndView listLost() {
         ModelAndView mav = new ModelAndView();
-        try {
-            List<Issue> issueList = issueService.list();
-            JSONArray array = JSONArray.fromArray(issueList.toArray(new Issue[issueList.size()]));
-            response.getWriter().append(array.toString());
-            mav.addObject("message", array);
-            mav.setViewName("success");
-        } catch (IOException e) {
-            e.printStackTrace();
+        List<Issue> lostList = issueService.getLost();
+        JSONArray array = JSONArray.fromArray(lostList.toArray(new Issue[lostList.size()]));
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject object = (JSONObject) array.get(i);
+            object.remove("time");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String time = simpleDateFormat.format(lostList.get(i).getTime());
+            object.put("time", time);
         }
+        mav.addObject("message", array);
+        mav.setViewName("success");
         return mav;
     }
 
-    @RequestMapping("addIssue")
-    public ModelAndView addIssue(HttpServletResponse response, Issue issue) {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
+    @RequestMapping("listFix")
+    public ModelAndView listFix() {
         ModelAndView mav = new ModelAndView();
-        JSONObject res = new JSONObject();
-        try {
-            issueService.add(issue);
-            res.put("status", "success");
-        } catch (Exception e) {
-            res.put("status", "fail");
+        List<Issue> fixList = issueService.getFix();
+        JSONArray array = JSONArray.fromArray(fixList.toArray(new Issue[fixList.size()]));
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject object = (JSONObject) array.get(i);
+            object.remove("time");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String time = simpleDateFormat.format(fixList.get(i).getTime());
+            object.put("time", time);
         }
-
-        return mav;
-    }
-
-    @RequestMapping("deleteIssue")
-    public ModelAndView deleteIssue(HttpServletResponse response, int id) {
-        ModelAndView mav = new ModelAndView();
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-
-        JSONObject res = new JSONObject();
-
-        try {
-            issueService.delete(id);
-            response.getWriter().append(res.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return mav;
-    }
-
-    @RequestMapping("updateIssue")
-    public ModelAndView updateIssue(HttpServletResponse response, Issue issue) {
-        ModelAndView mav = new ModelAndView();
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        JSONObject res = new JSONObject();
-        try {
-            issueService.update(issue);
-            res.put("status", "success");
-        } catch (Exception e) {
-            res.put("status", "fail");
-        }
-        try {
-            response.getWriter().append(res.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return mav;
-    }
-
-    @RequestMapping("getIssue")
-    public ModelAndView getIssue(HttpServletResponse response, String content) {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        ModelAndView mav = new ModelAndView();
-        try {
-            List<Issue> issueList = issueService.get(content);
-            JSONArray array = JSONArray.fromArray(issueList.toArray(new Issue[issueList.size()]));
-            response.getWriter().append(array.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        mav.addObject("message", array);
+        mav.setViewName("success");
         return mav;
     }
 

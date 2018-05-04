@@ -23,25 +23,21 @@ public class NoticeController {
     NoticeService noticeService;
 
     @RequestMapping("listNotice")
-    public ModelAndView listNotice(HttpServletResponse response) {
+    public ModelAndView listNotice() {
         ModelAndView mav = new ModelAndView();
         List<Notice> noticeList = noticeService.list();
 
         JSONArray array = JSONArray.fromArray(noticeList.toArray(new Notice[noticeList.size()]));
-
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        PrintWriter out = null;
-        try {
-            out = response.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace(out);
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject obj = (JSONObject) array.get(i);
+            obj.remove("time");
+            obj.put("time", noticeList.get(i).getTimeStr());
         }
-        out.append(array.toString());
 
         mav.addObject("message", array);
         mav.setViewName("success");
         return mav;
+
     }
 
     @RequestMapping("addNotice")

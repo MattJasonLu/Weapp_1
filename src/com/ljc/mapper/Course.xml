@@ -5,26 +5,15 @@
 
 <mapper namespace="com.ljc.mapper.CourseMapper">
     <insert id="add" parameterType="Course" >
-        insert into t_course ( name, time, score ) values (#{name},#{time},#{score})
+        insert into t_course ( name, time, teacher, classId ) values (#{name},#{time},#{teacher},#{classId})
     </insert>
 
     <delete id="delete" parameterType="Course" >
         delete from t_course where id= #{id}
     </delete>
 
-    <select id="get" parameterType="Course" resultType="Course">
-        select * from t_course
-        <where>
-            <if test="id != null and id != ''">
-                and id = #{id}
-            </if>
-            <if test="time != null and time != ''">
-                and time = #{time}
-            </if>
-            <if test="score != null and score != ''">
-                and score = #{score}
-            </if>
-        </where>
+    <select id="get" parameterType="_int" resultType="Course">
+        select * from t_course where id = #{id}
     </select>
 
     <update id="update" parameterType="Course" >

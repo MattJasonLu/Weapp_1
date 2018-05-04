@@ -26,23 +26,13 @@ public class CourseController {
     CourseService courseService;
 
     @RequestMapping("listCourse")
-    public ModelAndView listCourse(HttpServletResponse response) {
+    public ModelAndView listCourse() {
 
         ModelAndView mav = new ModelAndView();
 
         List<Course> courseList = courseService.list();
 
         JSONArray array = JSONArray.fromArray(courseList.toArray(new Course[courseList.size()]));
-
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        PrintWriter out = null;
-        try {
-            out = response.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace(out);
-        }
-        out.append(array.toString());
 
         mav.addObject("message", array);
         mav.setViewName("success");

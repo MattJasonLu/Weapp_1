@@ -1,5 +1,6 @@
 package com.ljc.pojo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -23,6 +24,11 @@ public class Announcement {
 
     public Date getTime() {
         return time;
+    }
+
+    public String getTimeStr() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(time);
     }
 
     public void setTime(Date time) {

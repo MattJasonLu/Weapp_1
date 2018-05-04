@@ -23,8 +23,8 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public List<Issue> get(String content) {
-        return issueMapper.get(content);
+    public Issue get(int id) {
+        return issueMapper.get(id);
     }
 
     @Override
@@ -40,5 +40,15 @@ public class IssueServiceImpl implements IssueService {
     @Override
     public void update(Issue issue) {
         issueMapper.update(issue);
+    }
+
+    @Override
+    public List<Issue> getFix() {
+        return issueMapper.getFix();
+    }
+
+    @Override
+    public List<Issue> getLost() {
+        return issueMapper.getLost();
     }
 }

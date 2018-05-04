@@ -14,6 +14,8 @@ public interface CourseService {
 
     void delete(int id);
 
+    Course get(int id);
+
     List<Course> list();
 
     List<Course> get(Map params);

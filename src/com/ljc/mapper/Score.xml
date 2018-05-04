@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ljc.mapper.ScoreMapper">
+    <insert id="add" parameterType="Score" >
+        insert into t_score ( studentId, courseId, score ) values (#{studentId},#{courseId},#{score})
+    </insert>
+
+    <delete id="delete" parameterType="Score" >
+        delete from t_score where id= #{id}
+    </delete>
+
+    <select id="get" parameterType="Map" resultType="Score">
+        select * from t_score
+        <where>
+            <if test="studentId != null and studentId != ''">
+                and studentId = #{studentId}
+            </if>
+            <if test="courseId != null and courseId != ''">
+                and courseId = #{courseId}
+            </if>
+        </where>
+    </select>
+
+    <update id="update" parameterType="Score" >
+        update t_score set score=#{score} where id=#{id}
+    </update>
+    <select id="list" resultType="Score">
+        select * from   t_score
+    </select>
+</mapper>

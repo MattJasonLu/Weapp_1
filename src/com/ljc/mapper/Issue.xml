@@ -9,11 +9,19 @@
     </select>
 
     <select id="get" resultType="Issue" parameterType="String">
-        select * from t_issue where content like "%"#{content}"%"
+        select * from t_issue where id = #{id}
+    </select>
+
+    <select id="getLost" resultType="Issue" parameterType="String">
+        SELECT * FROM t_issue WHERE category = 'lost'
+    </select>
+
+    <select id="getFix" resultType="Issue" parameterType="String">
+        SELECT * FROM t_issue WHERE category = 'fix'
     </select>
 
     <insert id="add" parameterType="Issue">
-        insert into t_issue (name, studentId, time, content) values (#{name}, #{studentId}, #{time}, #{content})
+        insert into t_issue (studentId, time, content, category) values (#{studentId}, #{time}, #{content}, #{category})
     </insert>
 
     <delete id="delete" parameterType="_int">

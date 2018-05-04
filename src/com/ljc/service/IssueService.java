@@ -9,10 +9,13 @@ import java.util.List;
  */
 public interface IssueService {
 
-    List<Issue> list();
-    List<Issue> get(String content);
     void add(Issue issue);
     void delete(int id);
+    List<Issue> list();
+    Issue get(int id);
     void update(Issue issue);
+    List<Issue> getFix();
+
+    List<Issue> getLost();
 
 }

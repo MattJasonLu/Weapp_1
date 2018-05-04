@@ -30,27 +30,25 @@ public class NewsController {
         // 数据库查询
         List<News> newsList = newsService.list();
         JSONArray array = JSONArray.fromArray(newsList.toArray(new News[newsList.size()]));
-        System.out.println(array);
+//        System.out.println(array);
 
         // 页面测试
         ModelAndView mav = new ModelAndView();
         // 放入转发参数
         mav.addObject("message", array);
-
-        // 放入jsp路径
+//
+//        // 放入jsp路径
         mav.setViewName("success");
 
         // 添加response信息流
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
-        PrintWriter out = null;
-        try {
-            out = response.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace(out);
-        }
-        out.append(array.toString());
 
+        try {
+            response.getWriter().append(array.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return mav;
     }
 }

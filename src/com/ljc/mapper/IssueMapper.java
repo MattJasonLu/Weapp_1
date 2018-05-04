@@ -1,6 +1,7 @@
 package com.ljc.mapper;
 
 import com.ljc.pojo.Issue;
+import org.hamcrest.core.Is;
 
 import java.util.List;
 
@@ -11,6 +12,11 @@ public interface IssueMapper {
     void add(Issue issue);
     void delete(int id);
     List<Issue> list();
-    List<Issue> get(String content);
+    Issue get(int id);
+
+    List<Issue> getFix();
+
+    List<Issue> getLost();
+
     void update(Issue issue);
 }

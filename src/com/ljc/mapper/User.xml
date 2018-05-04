@@ -12,16 +12,8 @@
         delete from t_user where id= #{id}
     </delete>
 
-    <select id="get" parameterType="User" resultType="User">
-        select * from   t_user
-        <where>
-            <if test="id!=null and id!=''">
-                and id = #{id}
-            </if>
-            <if test="account!=null and account!='' and password!=null and password!=''">
-                and account = #{account} and password = #{password}
-            </if>
-        </where>
+    <select id="get" parameterType="map" resultType="User">
+        select * from t_user where account = #{account} and password = #{password}
     </select>
 
     <update id="update" parameterType="User" >

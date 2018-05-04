@@ -1,5 +1,6 @@
 package com.ljc.pojo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -62,4 +63,8 @@ public class Notice {
     }
 
 
+    public String getTimeStr() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(time);
+    }
 }

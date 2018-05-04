@@ -41,21 +41,15 @@ public class AnnouncementController {
     }
 
     @RequestMapping("listAnnouncement")
-    public ModelAndView listAnnouncement(HttpServletResponse response) {
+    public ModelAndView listAnnouncement() {
         ModelAndView mav = new ModelAndView();
         List<Announcement> announcementList = announcementService.list();
         JSONArray array = JSONArray.fromArray(announcementList.toArray(new Announcement[announcementList.size()]));
-
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        PrintWriter out = null;
-        try {
-            out = response.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace(out);
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject obj = (JSONObject) array.get(i);
+            obj.remove("time");
+            obj.put("time", announcementList.get(i).getTimeStr());
         }
-        out.append(array.toString());
-
         mav.addObject("message", array);
         mav.setViewName("success");
 

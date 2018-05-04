@@ -18,8 +18,33 @@ public class StudentServiceImpl implements StudentService {
     StudentMapper studentMapper;
 
     @Override
+    public void add(Student student) {
+        studentMapper.add(student);
+    }
+
+    @Override
+    public void delete(int id) {
+        studentMapper.delete(id);
+    }
+
+    @Override
+    public Student get(int id) {
+        return studentMapper.get(id);
+    }
+
+    @Override
+    public void update(Student student) {
+        studentMapper.update(student);
+    }
+
+    @Override
     public List<Student> list(){
         return studentMapper.list();
+    }
+
+    @Override
+    public int count() {
+        return studentMapper.count();
     }
 
 }

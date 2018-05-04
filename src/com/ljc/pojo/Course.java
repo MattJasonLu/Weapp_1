@@ -6,8 +6,9 @@ package com.ljc.pojo;
 public class Course {
     private int id;
     private String name;
-    private int time;
-    private float score;
+    private String teacher;
+    private String time;
+    private int classId;
 
     public int getId() {
         return id;
@@ -25,20 +26,28 @@ public class Course {
         this.name = name;
     }
 
-    public int getTime() {
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
+    }
+
+    public String getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public float getScore() {
-        return score;
+    public int getClassId() {
+        return classId;
     }
 
-    public void setScore(float score) {
-        this.score = score;
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
     @Override
@@ -46,8 +55,9 @@ public class Course {
         return "Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", time=" + time +
-                ", score=" + score +
+                ", teacher='" + teacher + '\'' +
+                ", time='" + time + '\'' +
+                ", classId=" + classId +
                 '}';
     }
 }
