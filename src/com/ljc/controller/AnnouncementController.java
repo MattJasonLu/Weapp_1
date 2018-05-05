@@ -2,16 +2,21 @@ package com.ljc.controller;
 
 import com.ljc.pojo.Announcement;
 import com.ljc.service.AnnouncementService;
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,20 +29,16 @@ public class AnnouncementController {
     AnnouncementService announcementService;
 
     @RequestMapping("addAnnouncement")
-    public void addAnnouncement(Announcement announcement, HttpServletResponse response) {
-        announcementService.add(announcement);
-        // 添加response信息流
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
+    public ModelAndView addAnnouncement(Announcement announcement) {
+        announcement.setTime(new Date());
+        announcement.setCreaterId(1);
+        ModelAndView mav = new ModelAndView();
         JSONObject res = new JSONObject();
-        res.put("status", "请求成功");
-        PrintWriter out = null;
-        try {
-            out = response.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace(out);
-        }
-        out.append(res.toString());
+        announcementService.add(announcement);
+        res.put("status", "success");
+        mav.addObject("message", res);
+        mav.setViewName("success");
+        return mav;
     }
 
     @RequestMapping("listAnnouncement")
@@ -58,13 +59,38 @@ public class AnnouncementController {
     }
 
     @RequestMapping("getAnnouncement")
-    public void getAnnouncement(Announcement announcement) {
-        System.out.println(announcement);
-        List<Announcement> announcements = announcementService.get(announcement);
-        for (Announcement a :
-                announcements) {
-            System.out.println(a);
+    public ModelAndView getAnnouncement(String keyword, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
+        ModelAndView mav = new ModelAndView();
+        if (keyword != null) {
+            List<Announcement> announcementList = announcementService.getByKeyword(keyword);
+            JSONArray array = JSONArray.fromArray(announcementList.toArray(new Announcement[announcementList.size()]));
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject obj = (JSONObject) array.get(i);
+                obj.remove("time");
+                obj.put("time", announcementList.get(i).getTimeStr());
+            }
+            mav.addObject("message", array);
+        }
+        mav.setViewName("success");
+        return mav;
+
+    }
+
+    @RequestMapping("deleteAnnouncement")
+    public ModelAndView deleteAnnouncement(int id) {
+        ModelAndView mav = new ModelAndView();
+        announcementService.delete(id);
+        JSONObject res = new JSONObject();
+        res.put("status", "success");
+        mav.addObject("message", res);
+        mav.setViewName("success");
+        return mav;
     }
 
 }

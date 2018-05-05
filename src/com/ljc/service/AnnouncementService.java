@@ -13,9 +13,7 @@ public interface AnnouncementService {
 
     void delete(int id);
 
-    List<Announcement> get(Announcement announcement);
-
-    List<Announcement> get(String content);
+    List<Announcement> getByKeyword(String keyword);
 
     void update(Announcement announcement);
 

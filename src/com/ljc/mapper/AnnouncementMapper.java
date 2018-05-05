@@ -9,17 +9,15 @@ import java.util.List;
  */
 public interface AnnouncementMapper {
 
-    public void add(Announcement announcement);
+    void add(Announcement announcement);
 
-    public void delete(int id);
+    void delete(int id);
 
-    public List<Announcement> get(Announcement announcement);
+    List<Announcement> getByKeyword(String keyword);
 
-    public List<Announcement> get(String content);
+    void update(Announcement announcement);
 
-    public void update(Announcement announcement);
+    List<Announcement> list();
 
-    public List<Announcement> list();
-
-    public int count();
+    int count();
 }

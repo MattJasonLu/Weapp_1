@@ -28,14 +28,10 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public List<Announcement> get(Announcement announcement) {
-        return announcementMapper.get(announcement);
+    public List<Announcement> getByKeyword(String keyword) {
+        return announcementMapper.getByKeyword(keyword);
     }
 
-    @Override
-    public List<Announcement> get(String content) {
-        return announcementMapper.get(content);
-    }
 
     @Override
     public void update(Announcement announcement) {

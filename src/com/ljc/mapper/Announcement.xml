@@ -12,16 +12,8 @@
         delete from t_announcement where id= #{id}
     </delete>
 
-    <select id="get" parameterType="Announcement" resultType="Announcement">
-        select * from   t_announcement
-        <where>
-            <if test="id!=null and id!=''">
-                and id = #{id}
-            </if>
-            <if test="content != null and content != ''">
-                and content like "%"#{content}"%"
-            </if>
-        </where>
+    <select id="getByKeyword" parameterType="String" resultType="Announcement">
+        select * from   t_announcement where content like "%"#{keyword}"%"
     </select>
 
     <update id="update" parameterType="Announcement" >
