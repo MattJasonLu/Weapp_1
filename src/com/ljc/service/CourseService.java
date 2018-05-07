@@ -18,7 +18,7 @@ public interface CourseService {
 
     List<Course> list();
 
-    List<Course> get(Map params);
+    List<Course> get(String keyword);
 
     void update(Course course);
 

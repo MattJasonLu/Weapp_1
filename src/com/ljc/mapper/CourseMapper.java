@@ -18,7 +18,7 @@ public interface CourseMapper {
 
     Course get(int id);
 
-    List<Course> get(Map params);
+    List<Course> get(String keyword);
 
     void update(Course course);
 

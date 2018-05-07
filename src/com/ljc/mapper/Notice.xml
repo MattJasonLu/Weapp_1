@@ -15,8 +15,8 @@
     <select id="get" parameterType="String" resultType="Notice">
         select * from   t_notice
         <where>
-            <if test="content != null and content != ''">
-                and content like "%"#{content}"%"
+            <if test="_parameter != null and _parameter != ''">
+                and content like "%"#{_parameter}"%"
             </if>
         </where>
     </select>

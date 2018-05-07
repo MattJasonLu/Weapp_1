@@ -39,9 +39,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> get(Map params) {
-        return courseMapper.get(params);
+    public List<Course> get(String keyword) {
+        return courseMapper.get(keyword);
     }
+
 
     @Override
     public void update(Course course) {

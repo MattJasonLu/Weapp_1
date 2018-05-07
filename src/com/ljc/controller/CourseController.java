@@ -41,49 +41,49 @@ public class CourseController {
     }
 
     @RequestMapping("addCourse")
-    public ModelAndView addCourse(Course course, HttpServletResponse response) {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
+    public ModelAndView addCourse(Course course) {
+        ModelAndView mav = new ModelAndView();
         JSONObject res = new JSONObject();
         try {
             courseService.add(course);
             res.put("status", "请求成功");
-            response.getWriter().append(res.toString());
+
         } catch (Exception e) {
             res.put("status", "请求失败");
             e.printStackTrace();
         }
-        return null;
+        mav.addObject("message", res);
+        mav.setViewName("success");
+        return mav;
     }
 
     @RequestMapping("deleteCourse")
-    public ModelAndView deleteCourse(int id, HttpServletResponse response) {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
+    public ModelAndView deleteCourse(int id) {
+        ModelAndView mav = new ModelAndView();
         JSONObject res = new JSONObject();
         try {
             courseService.delete(id);
             res.put("status", "请求成功");
-            response.getWriter().append(res.toString());
+            mav.addObject("message", res);
+            mav.setViewName("success");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return mav;
     }
 
     @RequestMapping("getCourse")
-    public ModelAndView getCourse(Map params, HttpServletResponse response) {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        JSONObject res = new JSONObject();
+    public ModelAndView getCourse(String keyword) {
+        ModelAndView mav = new ModelAndView();
         try {
-            List<Course> courseList = courseService.get(params);
+            List<Course> courseList = courseService.get(keyword);
             JSONArray array = JSONArray.fromArray(courseList.toArray(new Course[courseList.size()]));
-            response.getWriter().append(array.toString());
+            mav.addObject("message", array);
+            mav.setViewName("success");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return mav;
     }
 
     @RequestMapping("updateCourse")

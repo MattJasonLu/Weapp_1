@@ -19,6 +19,8 @@ public interface ScoreService {
 
     List<Score> get(Map params);
 
+    Score get(String studentId, String courseId);
+
     void update(Score score);
 
 }

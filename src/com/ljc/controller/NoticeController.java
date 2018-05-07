@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,23 +42,16 @@ public class NoticeController {
     }
 
     @RequestMapping("addNotice")
-    public ModelAndView addNotice(HttpServletResponse response, Notice notice) {
+    public ModelAndView addNotice(Notice notice) {
         ModelAndView mav = new ModelAndView();
-
+        notice.setTime(new Date());
+        notice.setAdminId(1);
+        notice.setCategoryId(1);
+        notice.setStudentId(1);
         noticeService.add(notice);
 
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-
         JSONObject res = new JSONObject();
-        PrintWriter out = null;
-        try {
-            out = response.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace(out);
-        }
         res.put("status", "success");
-        out.append(res.toString());
 
         mav.addObject("message", res);
         mav.setViewName("success");
@@ -65,21 +59,33 @@ public class NoticeController {
     }
 
     @RequestMapping("deleteNotice")
-    public ModelAndView deleteNotice(HttpServletResponse response, String id) {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
+    public ModelAndView deleteNotice(String id) {
         ModelAndView mav = new ModelAndView();
         JSONObject res = new JSONObject();
         try {
             noticeService.delete(id);
             res.put("status", "success");
-            response.getWriter().append(res.toString());
         } catch (Exception e) {
             res.put("status", "fail");
         }
         mav.addObject("message", res);
         mav.setViewName("success");
 
+        return mav;
+    }
+
+    @RequestMapping("getNotice")
+    public ModelAndView getNotice(String content) {
+        ModelAndView mav = new ModelAndView();
+        List<Notice> noticeList = noticeService.get(content);
+        JSONArray array = JSONArray.fromArray(noticeList.toArray(new Notice[noticeList.size()]));
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject obj = (JSONObject) array.get(i);
+            obj.remove("time");
+            obj.put("time", noticeList.get(i).getTimeStr());
+        }
+        mav.addObject("message", array);
+        mav.setViewName("success");
         return mav;
     }
 

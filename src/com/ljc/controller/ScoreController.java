@@ -8,6 +8,7 @@ import com.ljc.service.ScoreService;
 import com.ljc.service.StudentService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,9 +82,32 @@ public class ScoreController {
     public ModelAndView getScore(Map params) {
         ModelAndView mav = new ModelAndView();
         List<Score> scoreList = scoreService.get(params);
-        JSONArray array = JSONArray.fromArray(scoreList.toArray(new Score[scoreList.size()]));
+        JSONArray array = new JSONArray();
+        for (Score score : scoreList) {
+            JSONObject jsonObject = new JSONObject();
+            Student student = studentService.get(score.getStudentId());
+            Course course = courseService.get(score.getCourseId());
+            String name = course.getName();
+            jsonObject.put("name", name);
+            jsonObject.put("score", score.getScore());
+            array.put(jsonObject);
+        }
         mav.addObject("message", array);
         mav.setViewName("success");
+        return mav;
+    }
+
+    @RequestMapping("updateScore")
+    public ModelAndView updateScore(Score score) {
+        ModelAndView mav = new ModelAndView();
+        JSONObject res = new JSONObject();
+        try {
+            scoreService.update(score);
+            res.put("status", "success");
+        } catch (Exception e) {
+            res.put("status", "fail");
+        }
+        mav.addObject("message", res);
         return mav;
     }
 }

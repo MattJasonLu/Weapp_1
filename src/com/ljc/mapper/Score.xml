@@ -25,7 +25,7 @@
     </select>
 
     <update id="update" parameterType="Score" >
-        update t_score set score=#{score} where id=#{id}
+        update t_score set score=#{score} where studentId=#{studentId} and courseId=#{courseId}
     </update>
     <select id="list" resultType="Score">
         select * from   t_score

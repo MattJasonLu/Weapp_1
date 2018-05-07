@@ -38,6 +38,11 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
+    public Score get(String studentId, String courseId) {
+        return scoreMapper.get(studentId, courseId);
+    }
+
+    @Override
     public void update(Score score) {
         scoreMapper.update(score);
     }

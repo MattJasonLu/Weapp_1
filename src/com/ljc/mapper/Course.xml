@@ -12,8 +12,8 @@
         delete from t_course where id= #{id}
     </delete>
 
-    <select id="get" parameterType="_int" resultType="Course">
-        select * from t_course where id = #{id}
+    <select id="get" parameterType="String" resultType="Course">
+        select * from t_course where name LIKE "%"#{keyword}"%" or teacher LIKE "%"#{keyword}"%"
     </select>
 
     <update id="update" parameterType="Course" >
