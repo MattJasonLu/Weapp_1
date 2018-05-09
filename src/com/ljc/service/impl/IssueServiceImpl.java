@@ -28,6 +28,11 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
+    public List<Issue> getByContent(String keyword) {
+        return issueMapper.getByContent(keyword);
+    }
+
+    @Override
     public void add(Issue issue) {
         issueMapper.add(issue);
     }

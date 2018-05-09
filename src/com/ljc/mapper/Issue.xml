@@ -12,6 +12,10 @@
         select * from t_issue where id = #{id}
     </select>
 
+    <select id="getByContent" parameterType="String" resultType="Issue">
+        select * from t_issue WHERE content LIKE "%"#{keyword}"%";
+    </select>
+
     <select id="getLost" resultType="Issue" parameterType="String">
         SELECT * FROM t_issue WHERE category = 'lost'
     </select>

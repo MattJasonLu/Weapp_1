@@ -13,6 +13,7 @@ public interface IssueService {
     void delete(int id);
     List<Issue> list();
     Issue get(int id);
+    List<Issue> getByContent(String keyword);
     void update(Issue issue);
     List<Issue> getFix();
 

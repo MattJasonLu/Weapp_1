@@ -29,8 +29,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course get(int id) {
-        return courseMapper.get(id);
+    public Course getById(int id) {
+        return courseMapper.getById(id);
     }
 
     @Override

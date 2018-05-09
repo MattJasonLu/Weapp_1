@@ -34,16 +34,20 @@ public class ScoreController {
         ModelAndView mav = new ModelAndView();
         List<Score> scoreList = scoreService.list();
         JSONArray array = new JSONArray();
-        for (Score score : scoreList) {
-            JSONObject jsonObject = new JSONObject();
-            Student student = studentService.get(score.getStudentId());
-            Course course = courseService.get(score.getCourseId());
-            String name = course.getName();
-            jsonObject.put("name", name);
-            jsonObject.put("score", score.getScore());
-            array.put(jsonObject);
+        try {
+            for (Score score : scoreList) {
+                JSONObject jsonObject = new JSONObject();
+                Student student = studentService.get(score.getStudentId());
+                Course course = courseService.getById(score.getCourseId());
+                String name = course.getName();
+                jsonObject.put("name", name);
+                jsonObject.put("score", score.getScore());
+                array.put(jsonObject);
+            }
+            mav.addObject("message", array);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        mav.addObject("message", array);
         mav.setViewName("success");
         return mav;
     }
@@ -79,20 +83,10 @@ public class ScoreController {
     }
 
     @RequestMapping("getScore")
-    public ModelAndView getScore(Map params) {
+    public ModelAndView getScore(String keyword) {
         ModelAndView mav = new ModelAndView();
-        List<Score> scoreList = scoreService.get(params);
-        JSONArray array = new JSONArray();
-        for (Score score : scoreList) {
-            JSONObject jsonObject = new JSONObject();
-            Student student = studentService.get(score.getStudentId());
-            Course course = courseService.get(score.getCourseId());
-            String name = course.getName();
-            jsonObject.put("name", name);
-            jsonObject.put("score", score.getScore());
-            array.put(jsonObject);
-        }
-        mav.addObject("message", array);
+
+
         mav.setViewName("success");
         return mav;
     }

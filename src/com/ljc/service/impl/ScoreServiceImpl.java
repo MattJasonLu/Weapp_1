@@ -33,8 +33,8 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public List<Score> get(Map params) {
-        return scoreMapper.get(params);
+    public List<Score> get(String keyword) {
+        return scoreMapper.get(keyword);
     }
 
     @Override

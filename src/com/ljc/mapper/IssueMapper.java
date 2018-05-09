@@ -14,6 +14,8 @@ public interface IssueMapper {
     List<Issue> list();
     Issue get(int id);
 
+    List<Issue> getByContent(String keyword);
+
     List<Issue> getFix();
 
     List<Issue> getLost();

@@ -12,16 +12,11 @@
         delete from t_score where id= #{id}
     </delete>
 
-    <select id="get" parameterType="Map" resultType="Score">
-        select * from t_score
-        <where>
-            <if test="studentId != null and studentId != ''">
-                and studentId = #{studentId}
-            </if>
-            <if test="courseId != null and courseId != ''">
-                and courseId = #{courseId}
-            </if>
-        </where>
+    <select id="get" parameterType="String" resultType="Score">
+        select * FROM t_score WHERE t_score.courseId in
+        (select t_course.id from t_course WHERE name LIKE "%"#{keyword}"%")
+        AND t_score.studentId in
+        (SELECT t_student.id FROM t_student WHERE name LIKE "%"#{keyword}"%");
     </select>
 
     <update id="update" parameterType="Score" >

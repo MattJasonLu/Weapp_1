@@ -17,7 +17,7 @@ public interface ScoreService {
 
     List<Score> list();
 
-    List<Score> get(Map params);
+    List<Score> get(String keyword);
 
     Score get(String studentId, String courseId);
 

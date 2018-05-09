@@ -16,7 +16,7 @@ public interface CourseMapper {
 
     List<Course> list();
 
-    Course get(int id);
+    Course getById(int id);
 
     List<Course> get(String keyword);
 

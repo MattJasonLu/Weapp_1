@@ -21,18 +21,24 @@ public class TurnoverController {
     TurnoverService turnoverService;
 
     @RequestMapping("listTurnover")
-    public ModelAndView listTurnover(HttpServletResponse response) {
+    public ModelAndView listTurnover() {
         ModelAndView mav = new ModelAndView();
 
         List<Turnover> turnoverList = turnoverService.list();
         JSONArray array = JSONArray.fromArray(turnoverList.toArray(new Turnover[turnoverList.size()]));
 
-        try {
-            response.getWriter().append(array.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        mav.addObject("message", array);
+        mav.setViewName("success");
 
+        return mav;
+    }
+
+    @RequestMapping("getTurnover")
+    public ModelAndView listTurnover(String keyword) {
+        ModelAndView mav = new ModelAndView();
+
+        List<Turnover> turnoverList = turnoverService.get(keyword);
+        JSONArray array = JSONArray.fromArray(turnoverList.toArray(new Turnover[turnoverList.size()]));
         mav.addObject("message", array);
         mav.setViewName("success");
 

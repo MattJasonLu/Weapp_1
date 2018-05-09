@@ -16,6 +16,10 @@
         select * from t_course where name LIKE "%"#{keyword}"%" or teacher LIKE "%"#{keyword}"%"
     </select>
 
+    <select id="getById" parameterType="_int" resultType="Course">
+        select * from t_course WHERE id=#{id};
+    </select>
+
     <update id="update" parameterType="Course" >
         update t_course set name=#{name} where id=#{id}
     </update>
